@@ -41,38 +41,38 @@ extern char loginEditOverride;
 
 
 ExistingAccountPage::ExistingAccountPage()
-        : mEmailField( mainFont, 0, 128, 10, false, 
+        : mEmailField( mainFont, -360, 96, 10, false, 
                        translate( "username" ),
                        NULL,
                        // forbid only spaces and backslash and 
                        // single/double quotes 
                        "\"' \\" ),
-          mKeyField( mainFont, 0, 0, 15, true,
+          mKeyField( mainFont, -360, 0, 15, true,
                      translate( "accountKey" ),
                      // allow only ticket code characters
                      "23456789ABCDEFGHJKLMNPQRSTUVWXYZ-" ),
           mAtSignButton( mainFont, 252, 128, "@" ),
-          mPasteButton( mainFont, 0, -60, translate( "paste" ), 'v', 'V' ),
+          mPasteButton( mainFont, 0, -112, translate( "paste" ), 'v', 'V' ),
           mPasteEmailButton( mainFont, 0, 68, translate( "paste" ), 'v', 'V' ),
           mDisableCustomServerButton( mainFont, 0, 220, 
                                       translate( "disableCustomServer" ) ),
-          mLoginButton( mainFont, 400, 0, translate( "loginButton" ) ),
-          mFriendsButton( mainFont, 400, -80, translate( "friendsButton" ) ),
-          mGenesButton( mainFont, 550, 0, translate( "genesButton" ) ),
-          mFamilyTreesButton( mainFont, 320, -160, translate( "familyTrees" ) ),
-          mTechTreeButton( mainFont, 550, -160, translate( "techTree" ) ),
-          mClearAccountButton( mainFont, 400, -280, 
+          mLoginButton( mainFont, -360, -64, translate( "loginButton" ) ),
+          mFriendsButton( mainFont, -360, -64, translate( "friendsButton" ) ),
+          mGenesButton( mainFont, 522, 300, translate( "genesButton" ) ),
+          mFamilyTreesButton( mainFont, 360, 16, translate( "familyTrees" ) ),
+          mTechTreeButton( mainFont, 360, -176, translate( "techTree" ) ),
+          mClearAccountButton( mainFont, -360, -64, 
                                translate( "clearAccount" ) ),
-          mCancelButton( mainFont, -400, -280, 
+          mCancelButton( mainFont, 360, -272, 
                          translate( "quit" ) ),
-          mSettingsButton( mainFont, -400, -120, 
+          mSettingsButton( mainFont, 360, -80,
                            translate( "settingsButton" ) ),
           mReviewButton( mainFont, -400, -200, 
                          translate( "postReviewButton" ) ),
           mRetryButton( mainFont, -100, 198, translate( "retryButton" ) ),
           mRedetectButton( mainFont, 100, 198, translate( "redetectButton" ) ),
           mViewAccountButton( mainFont, 0, 64, translate( "view" ) ),
-          mTutorialButton( mainFont, 522, 300, 
+          mTutorialButton( mainFont, 360, 112, 
                            translate( "tutorial" ) ),
           mPageActiveStartTime( 0 ),
           mFramesCounted( 0 ),
@@ -81,15 +81,18 @@ ExistingAccountPage::ExistingAccountPage()
     
     
     // center this in free space
-    /*
-    mPasteButton.setPosition( ( 333 + mKeyField.getRightEdgeX() ) / 2,
-                              -64 );
-    */
+    
+    mPasteButton.setPosition( mKeyField.getRightEdgeX() + 64,
+                              47 );
+    
     // align this one with the paste button
     mAtSignButton.setPosition( mEmailField.getRightEdgeX() + 48,
                                128 );
     
     
+    mLoginButton.setPosition( mEmailField.getRightEdgeX() - ( mLoginButton.getWidth()/2 ), -64 );
+    mFriendsButton.setPosition( mEmailField.getLeftEdgeX() + ( mFriendsButton.getWidth()/2 ), -64 );
+
     if( userEmail != NULL && accountKey != NULL ) {
         mEmailField.setText( userEmail );
         mKeyField.setText( accountKey );
@@ -123,7 +126,7 @@ ExistingAccountPage::ExistingAccountPage()
     addComponent( &mGenesButton );
     addComponent( &mFamilyTreesButton );
     addComponent( &mTechTreeButton );
-    addComponent( &mClearAccountButton );
+    //addComponent( &mClearAccountButton );
     addComponent( &mCancelButton );
     addComponent( &mSettingsButton );
     addComponent( &mReviewButton );
@@ -138,6 +141,16 @@ ExistingAccountPage::ExistingAccountPage()
 
     addComponent( &mViewAccountButton );
     addComponent( &mTutorialButton );
+    
+    // this section have all buttons with the same width
+    mTutorialButton.setSize( 175, 60 );
+    mSettingsButton.setSize( 175, 60 );
+    mFamilyTreesButton.setSize( 175, 60 );
+    mTechTreeButton.setSize( 175, 60 );
+    mCancelButton.setSize( 175, 60 );
+    
+    mEmailField.setLabelTop( true );
+    mKeyField.setLabelTop( true );
     
     mLoginButton.addActionListener( this );
     mFriendsButton.addActionListener( this );
@@ -368,9 +381,7 @@ void ExistingAccountPage::makeNotActive() {
 void ExistingAccountPage::step() {
     mPasteButton.setVisible( isClipboardSupported() &&
                              mKeyField.isFocused() );
-    mPasteEmailButton.setVisible( isClipboardSupported() &&
-                                  mEmailField.isFocused() );
-    // mAtSignButton.setVisible( mEmailField.isFocused() );
+    //mAtSignButton.setVisible( mEmailField.isFocused() );
     }
 
 
@@ -647,7 +658,8 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
                 
                 int pastSuccess = 
                     SettingsManager::getIntSetting( "loginSuccess", 0 );
-                if( pastSuccess ) {
+                // friendsButton visible whenever loginButton is visible
+                if( pastSuccess || true ) {
                     mFriendsButton.setVisible( true );
                     }
                 
@@ -676,9 +688,9 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
     setDrawColor( 1, 1, 1, 1 );
     
 
-    doublePair pos = { -9, -225 };
+    doublePair pos = { 0, -175 };
     
-    drawSprite( instructionsSprite, pos );
+    //drawSprite( instructionsSprite, pos );
 
 
     if( ! mEmailField.isVisible() ) {
