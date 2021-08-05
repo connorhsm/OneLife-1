@@ -91,6 +91,7 @@ class ExistingAccountPage : public GamePage, public ActionListener {
         Background mBackground;
         Background mGameLogo;
         
+        TextButton mSeedButton;
         TextButton mLoginButton;
         TextButton mFriendsButton;
         TextButton mGenesButton;
