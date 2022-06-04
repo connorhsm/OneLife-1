@@ -76,6 +76,7 @@ extern const char *clientTag;
 extern double frameRateFactor;
 
 extern Font *mainFont;
+extern Font *oldMainFont;
 extern Font *numbersFontFixed;
 extern Font *mainFontReview;
 extern Font *handwritingFont;
@@ -83,7 +84,7 @@ extern Font *pencilFont;
 extern Font *pencilErasedFont;
 
 void LivingLifePage::hetuwDrawMainFont(const char* str, doublePair drawPos, TextAlignment align) {
-	mainFont->drawString( str, drawPos, align );
+	oldMainFont->drawString( str, drawPos, align );
 }
 
 double LivingLifePage::hetuwMeasureStringMainFont(const char* str) {
@@ -6911,7 +6912,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
             
             doublePair conPos = pos;
             conPos.y += 128;
-            drawMessage( "connecting", conPos, false, connectionMessageFade );
+            drawMessage( "connecting", conPos, false, connectionMessageFade, true );
             }
 
         
@@ -6926,7 +6927,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
             
             doublePair custPos = pos;
             custPos.y += 192;
-            drawMessage( message, custPos );
+            drawMessage( message, custPos, false, 1.0, true );
             
             delete [] message;
             }
@@ -6936,20 +6937,20 @@ void LivingLifePage::draw( doublePair inViewCenter,
         if( ! serverSocketConnected ) {
             // don't draw waiting message, not connected yet
             if( userReconnect ) {
-                drawMessage( "waitingReconnect", pos );
+                drawMessage( "waitingReconnect", pos, false, 1.0, true );
 				HetuwMod::drawWaitingText(pos);
                 }
             }
         else if( userReconnect ) {
-            drawMessage( "waitingReconnect", pos );
+            drawMessage( "waitingReconnect", pos, false, 1.0, true );
 			HetuwMod::drawWaitingText(pos);
             }
         else if( mPlayerInFlight ) {
-            drawMessage( "waitingArrival", pos );
+            drawMessage( "waitingArrival", pos, false, 1.0, true );
 			HetuwMod::drawWaitingText(pos);
             }
         else if( userTwinCode == NULL ) {
-            drawMessage( "waitingBirth", pos );
+            drawMessage( "waitingBirth", pos, false, 1.0, true );
 			HetuwMod::drawWaitingText(pos);
             }
         else {
@@ -6964,14 +6965,14 @@ void LivingLifePage::draw( doublePair inViewCenter,
             char *message = autoSprintf( translate( "waitingBirthFriends" ),
                                          sizeString );
 
-            drawMessage( message, pos );
+            drawMessage( message, pos, false, 1.0, true );
             delete [] message;
 
             if( !mStartedLoadingFirstObjectSet ) {
                 doublePair tipPos = pos;
                 tipPos.y -= 200;
                 
-                drawMessage( translate( "cancelWaitingFriends" ), tipPos );
+                drawMessage( translate( "cancelWaitingFriends" ), tipPos, false, 1.0, true );
                 }
             }
         
