@@ -29,13 +29,13 @@ static doublePair tutorialButtonPos = { 522, 300 };
 
 
 RebirthChoicePage::RebirthChoicePage()
-        : mQuitButton( mainFont, -150, -128, 
+        : mQuitButton( mainFont, 0, -128, 
                        translate( "quit" ) ),
           mReviewButton( mainFont, 150, 64, 
                        translate( "postReviewButton" ) ),
-          mRebornButton( mainFont, 150, -128, 
+          mRebornButton( mainFont, 0, 64, 
                          translate( "reborn" ) ),
-          mGenesButton( mainFont, -300, 64, 
+          mGenesButton( mainFont, 0, -32, 
                         translate( "geneticHistoryButton" ) ),
           mTutorialButton( mainFont, tutorialButtonPos.x, tutorialButtonPos.y, 
                            translate( "tutorial" ) ),
@@ -48,8 +48,14 @@ RebirthChoicePage::RebirthChoicePage()
         addComponent( &mQuitButton );
         addComponent( &mReviewButton );
         addComponent( &mMenuButton );
-	addComponent( &mTutorialButton );
-	addComponent( &mGenesButton );
+        addComponent( &mTutorialButton );
+        addComponent( &mGenesButton );
+
+        mReviewButton.setVisible( false );    
+        mQuitButton.setSize( 230, 60 );
+        mRebornButton.setSize( 230, 60 );
+        mGenesButton.setSize( 230, 60 );
+    
         }
     else {
         mRebornButton.setPosition( 0, -200 );
@@ -166,7 +172,7 @@ void RebirthChoicePage::makeActive( char inFresh ) {
         mReviewButton.setVisible( false );
         }
     else {
-        mReviewButton.setVisible( true );
+        // mReviewButton.setVisible( true );
         }
 
 
