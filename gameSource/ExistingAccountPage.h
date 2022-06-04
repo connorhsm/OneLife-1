@@ -3,7 +3,7 @@
 #include "TextField.h"
 #include "TextButton.h"
 #include "KeyEquivalentTextButton.h"
-
+#include "DropdownList.h"
 
 #include "minorGems/ui/event/ActionListener.h"
 #include "PageComponent.h"
@@ -81,6 +81,7 @@ class ExistingAccountPage : public GamePage, public ActionListener {
         TextField mEmailField;
         TextField mKeyField;
 
+        DropdownList mSpawnSeed;
         TextField *mFields[2];
 
         TextButton mAtSignButton;

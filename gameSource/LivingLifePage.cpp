@@ -160,6 +160,7 @@ extern char usingCustomServer;
 extern char *serverIP;
 extern int serverPort;
 
+extern char useSpawnSeed;
 extern char *userEmail;
 extern char *userTwinCode;
 extern int userTwinCount;
@@ -14689,7 +14690,7 @@ void LivingLifePage::step() {
                 std::string seededEmail = std::string( userEmail );
 
 				// If user doesn't have a seed in their email field
-				if( seededEmail.find('|') == std::string::npos ) {
+				if( seededEmail.find('|') == std::string::npos && useSpawnSeed ) {
 					char *seedListFromFile = SettingsManager::getSettingContents( "spawnSeed", "" );
 					std::string seedList(seedListFromFile);
 					delete [] seedListFromFile;
