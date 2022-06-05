@@ -1017,6 +1017,20 @@ double DropdownList::getRightEdgeX() {
 
 
 
+double DropdownList::getLeftEdgeX() {
+    
+    return mX - mWide / 2;
+    }
+
+
+
+double DropdownList::getWidth() {
+    
+    return mWide;
+    }
+
+
+
 void DropdownList::setFireOnAnyTextChange( char inFireOnAny ) {
     mFireOnAnyChange = inFireOnAny;
     }
